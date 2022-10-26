@@ -12,13 +12,15 @@ inThisBuild(
   )
 )
 
+val organization = sys.env.get("JIB_TARGET_IMAGE_ORGANIZATION").getOrElse(throw new IllegalArgumentException("JIB_TARGET_IMAGE_ORGANIZATION"))
+
 lazy val main =
   project
     .in(file("."))
     .enablePlugins(JibPlugin)
     .settings(
       version := "0.0.1-SNAPSHOT",
-      jibOrganization := "mblund", // TODO: REPLACE-WITH-YOUR-DOCKER-HUB-ORGANIZATION
+      jibOrganization := organization,
       jibBaseImage           := "openjdk:11-jre",
       jibName                := "jib-hello-world",
       jibUseCurrentTimestamp := true,
