@@ -10,10 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: production
-    env:
-      JIB_TARGET_IMAGE_USERNAME: ${{ secrets.JIB_TARGET_IMAGE_USERNAME }}
-      JIB_TARGET_IMAGE_PASSWORD: ${{ secrets.JIB_TARGET_IMAGE_PASSWORD }}
-      JIB_TARGET_IMAGE_ORGANIZATION: mblund
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -27,3 +23,15 @@ jobs:
       run: sbt --client compile
     - name: Publish
       run: sbt --client jibImageBuild
+      env:
+        JIB_TARGET_IMAGE_USERNAME: mblund
+        JIB_TARGET_IMAGE_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+        JIB_TARGET_IMAGE_ORGANIZATION: mblund
+    # See https://docs.kalix.io/projects/integrate-cicd-github-actions.html
+    #- name: Kalix Deploy
+    #  uses: lightbend/kalix-action@v4
+    #  with:
+    #    cmd: "services deploy person ${{ secrets. }}/person:${{ env.PERSON_VERSION }}"
+    #  env:
+    #    token: ${{ secrets.KALIX_TOKEN }}
+    #    project: ${{ secrets.KALIX_PROJECT_ID }}
