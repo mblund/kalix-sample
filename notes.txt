@@ -1,0 +1,7 @@
+KalixPlugin generate code that depends on scalatest. Should add scalatest as test-dependency.
+
+test runs a big test suite.
+     customer.api.CustomerServiceIntegrationSpec
+But it runs in test scope. Not it-scope.
+Downloads testcontainers
+Depends on docker

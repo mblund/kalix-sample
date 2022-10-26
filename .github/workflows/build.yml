@@ -28,10 +28,10 @@ jobs:
         JIB_TARGET_IMAGE_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
         JIB_TARGET_IMAGE_ORGANIZATION: mblund
     # See https://docs.kalix.io/projects/integrate-cicd-github-actions.html
-    #- name: Kalix Deploy
-    #  uses: lightbend/kalix-action@v4
-    #  with:
-    #    cmd: "services deploy person ${{ secrets. }}/person:${{ env.PERSON_VERSION }}"
-    #  env:
-    #    token: ${{ secrets.KALIX_TOKEN }}
-    #    project: ${{ secrets.KALIX_PROJECT_ID }}
+    - name: Kalix Deploy
+      uses: lightbend/kalix-action@v4
+      with:
+        cmd: "services deploy person ${{ secrets. }}/person:${{ env.PERSON_VERSION }}"
+      env:
+        token: ${{ secrets.KALIX_TOKEN }}
+        project: ${{ secrets.KALIX_PROJECT_ID }}

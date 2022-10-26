@@ -1,6 +1,6 @@
 inThisBuild(
   Seq(
-    scalaVersion := "3.0.2",
+    scalaVersion := "2.13.10",
     scalacOptions ++= Seq(
       "-deprecation",
       "-unchecked",
@@ -12,17 +12,24 @@ inThisBuild(
   )
 )
 
-val organization = sys.env.get("JIB_TARGET_IMAGE_ORGANIZATION").getOrElse(throw new IllegalArgumentException("JIB_TARGET_IMAGE_ORGANIZATION"))
+val organization =
+  sys.env.get("JIB_TARGET_IMAGE_ORGANIZATION").getOrElse("mblund")
 
-lazy val main =
+lazy val root = (project in file("."))
+  .aggregate(customerRegistry)
+
+lazy val customerRegistry =
   project
-    .in(file("."))
-    .enablePlugins(JibPlugin)
+    .in(file("customer-registry"))
+    .enablePlugins(KalixPlugin, JibPlugin)
     .settings(
-      version := "0.0.1-SNAPSHOT",
-      jibOrganization := organization,
+      name                   := "customer-registry",
+      jibOrganization        := organization,
       jibBaseImage           := "openjdk:11-jre",
       jibName                := "jib-hello-world",
       jibUseCurrentTimestamp := true,
-      jibPlatforms           := Set(JibPlatforms.amd64, JibPlatforms.arm64)
+      jibPlatforms           := Set(JibPlatforms.amd64, JibPlatforms.arm64),
+      libraryDependencies ++= Seq(
+        "org.scalatest" %% "scalatest" % "3.2.14" % Test
+      )
     )
