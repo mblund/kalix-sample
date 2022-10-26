@@ -9,6 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    environment: production
     env:
       JIB_TARGET_IMAGE_USERNAME: ${{ secrets.JIB_TARGET_IMAGE_USERNAME }}
       JIB_TARGET_IMAGE_PASSWORD: ${{ secrets.JIB_TARGET_IMAGE_PASSWORD }}
